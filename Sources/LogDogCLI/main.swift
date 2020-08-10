@@ -2,8 +2,6 @@ import LogDog
 import Foundation
 import ArgumentParser
 
-Loggers.setUp()
-
 let jsonDecoder = JSONDecoder()
 
 enum CLIError: Error {
@@ -18,7 +16,21 @@ struct CLI: ParsableCommand {
     @Option(name: .shortAndLong, help: "Label to filter")
     var label: String?
     
+    @Option(name: .shortAndLong, help: "Keyword to filter")
+    var keyword: String?
+    
+    @Option(name: .shortAndLong, help: "Processor to use")
+    var style = "plain"
+    
+    @Flag(name: .shortAndLong, help: "Color or not")
+    var color = true
+    
     mutating func run() throws {
+        let label = self.label
+        let keyword = self.keyword
+        let style = self.style
+        let color = self.color
+        
         shell(
             command: "tail -f \(file)",
             outputHandler: {
@@ -28,12 +40,35 @@ struct CLI: ParsableCommand {
                 do {
                     let logEntry = try jsonDecoder.decode(LogEntry.self, from: data)
                     
-                    guard logEntry.label == self.label else {
-                        return
+                    if let label = label {
+                        guard logEntry.label == label else {
+                            return
+                        }
                     }
                     
-                    let processor = BoxedTextLogProcessor() + ColorLogProcessor()
-                    let output = try processor.process(ProcessedLogEntry(logEntry, ())).output
+                    if let keyword = keyword {
+                        guard logEntry.message.description.contains(keyword) else {
+                            return
+                        }
+                    }
+                    
+                    var processor = AnyLogProcessor(
+                        TextLogProcessor.preferredFormat(.plain)
+                    )
+                    
+                    if style == "box" {
+                        processor = AnyLogProcessor(
+                            BoxTextLogProcessor(showDate: true, showThread: true, showLocation: true)
+                        )
+                    }
+                    
+                    if color {
+                        processor = AnyLogProcessor(
+                            processor + ColorLogProcessor()
+                        )
+                    }
+                    
+                    let output = try processor.process(logEntry).output
                     print(output)
                 } catch {
                     print(error)

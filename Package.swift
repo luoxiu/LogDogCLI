@@ -13,13 +13,11 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "0.2.0"),
-        .package(url: "https://github.com/luoxiu/Chalk.git", from: "0.1.0"),
         .package(url: "https://github.com/luoxiu/LogDog.git", .branch("master")),
     ],
     targets: [
         .target(name: "LogDogCLI", dependencies: [
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
-            "Chalk",
             "LogDog",
         ]),
         .testTarget(name: "LogDogCLITests", dependencies: ["LogDogCLI"]),

@@ -3,11 +3,11 @@
     "pins": [
       {
         "package": "Chalk",
-        "repositoryURL": "https://github.com/luoxiu/Chalk.git",
+        "repositoryURL": "https://github.com/luoxiu/Chalk",
         "state": {
           "branch": null,
-          "revision": "7548c5a17f02b7532d171d357c45b03781f81d70",
-          "version": "0.1.3"
+          "revision": "9896f3c1fa8337a9c0fb7950e322c4d5446a8d74",
+          "version": "0.1.4"
         }
       },
       {
@@ -24,7 +24,7 @@
         "repositoryURL": "https://github.com/luoxiu/LogDog.git",
         "state": {
           "branch": "master",
-          "revision": "7100a90ba4d20a5a040e3af5a01afce10304c976",
+          "revision": "4b5237d132756064e39fcb0dc1ad721c2254426c",
           "version": null
         }
       },
@@ -51,8 +51,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser",
         "state": {
           "branch": null,
-          "revision": "eb51f949cdd0c9d88abba9ce79d37eb7ea1231d0",
-          "version": "0.2.0"
+          "revision": "3e7d2fe99da091dcc1e4a7dd22fc3cfc2dca7937",
+          "version": "0.2.2"
         }
       },
       {
